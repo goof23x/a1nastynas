@@ -37,31 +37,29 @@ If you want to use a custom domain:
 2. Set up DNS A record pointing to your server's IP
 3. Ensure port 80 and 443 are forwarded to your server
 
-## Quick Start
+## Quick Start for End Users
 
-### Option 1: Download Pre-built ISO (Recommended)
-1. Download the latest A1Nas ISO from our [releases page](https://github.com/goob/a1nas/releases)
-2. Create bootable USB:
-   - **Windows**: Run Rufus → Select ISO → Select USB → Start
-   - **Mac**: Run Etcher → Select ISO → Select USB → Flash
-   - **Linux**: Run Etcher → Select ISO → Select USB → Flash
-3. Boot your server from the USB drive
-4. Follow the on-screen wizard to complete setup
+1. Download the latest A1Nas ISO from the [GitHub Releases page](https://github.com/goob/a1nas/releases).
+2. Use Rufus (Windows), Etcher (Mac/Linux), or the Proxmox ISO uploader to write the ISO to a USB stick or upload to your VM environment.
+3. Boot your server or VM from the USB or ISO.
+4. On the installer, select 'Quick Start' to use all default settings, or choose 'Guided Setup' for custom configuration.
+5. Access the web interface at the displayed IP address and start using your NAS!
 
-### Option 2: Build from Source (Liveboot)
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/goob/a1nas.git
-   cd a1nas
-   ```
+## For Developers: Building and Publishing the ISO
 
-2. Run the liveboot build script:
+1. Build the ISO:
    ```bash
    sudo bash build/build_live_iso.sh
    cd live-build-a1nas
    sudo lb build
    ```
-   The ISO will be created as `live-image-amd64.hybrid.iso` in this directory.
+   The ISO will be created as `live-image-amd64.hybrid.iso`.
+
+2. Test the ISO in a VM or on real hardware.
+
+3. Go to your GitHub repository → Releases → Draft a new release.
+4. Upload the ISO as a release asset and publish the release.
+5. Share the direct download link with users for seamless installation.
 
 ## Features
 
