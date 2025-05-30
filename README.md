@@ -1,6 +1,6 @@
 # A1Nas - Simple NAS Operating System
 
-A1Nas is a simple, secure, and powerful NAS operating system built on Ubuntu Server LTS. It provides an easy-to-use web interface for managing your storage, with built-in support for ZFS, Docker, and the LSI 9300-16i SAS controller.
+A1Nas is a simple, secure, and powerful NAS operating system built on Ubuntu Server LTS. It provides a modern, Google Drive-inspired web interface for managing your storage, with built-in support for ZFS, Docker, and the LSI 9300-16i SAS controller. The UI features custom branding and a default background image (`a1nas.png`).
 
 ## Pre-Installation Checklist
 
@@ -48,29 +48,29 @@ If you want to use a custom domain:
 3. Boot your server from the USB drive
 4. Follow the on-screen wizard to complete setup
 
-### Option 2: Build from Source
+### Option 2: Build from Source (Liveboot)
 1. Clone this repository:
    ```bash
    git clone https://github.com/goob/a1nas.git
    cd a1nas
    ```
 
-2. Run the build script:
+2. Run the liveboot build script:
    ```bash
-   sudo ./build/create_nas_os.sh
+   sudo bash build/build_live_iso.sh
+   cd live-build-a1nas
+   sudo lb build
    ```
-
-3. Use [Cubic](https://launchpad.net/cubic) to create the ISO:
-   - Install Cubic: `sudo add-apt-repository ppa:cubic-wizard/release && sudo apt update && sudo apt install cubic`
-   - Run Cubic: `sudo cubic`
-   - Follow the on-screen instructions
+   The ISO will be created as `live-image-amd64.hybrid.iso` in this directory.
 
 ## Features
 
 - **Simple Setup**: First-boot wizard guides you through the entire setup process
+- **Modern Web UI**: Google Drive-inspired interface with custom branding and background (`a1nas.png`)
 - **ZFS Storage**: Built-in support for ZFS with automatic RAID configuration
 - **LSI 9300-16i Support**: Optimized for LSI SAS controllers
 - **Docker Ready**: Run applications in containers with ZFS storage
+- **Remote Share Management**: *(Planned)* Add and manage remote Samba shares from the web interface
 - **Security First**: 
   - Automatic SSL certificates
   - Firewall configuration
@@ -151,7 +151,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 1. **Can't access web interface**
    - Check if server has IP address: `ip addr show`
    - Verify network connectivity: `ping 8.8.8.8`
-   - Check if services are running: `systemctl status nginx a1nas`
+   - Check if services are running: `systemctl status nginx` and (if set up) `systemctl status a1nas`
    - Solution: Restart network service: `systemctl restart networking`
 
 2. **SSL certificate errors**
@@ -185,8 +185,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Diagnostic Commands
 ```bash
 # System status
-systemctl status a1nas
 systemctl status nginx
+systemctl status a1nas  # If backend service is set up
 systemctl status docker
 
 # Storage status
@@ -200,8 +200,8 @@ netstat -tulpn
 ping 8.8.8.8
 
 # Logs
-journalctl -u a1nas
 journalctl -u nginx
+journalctl -u a1nas  # If backend service is set up
 tail -f /var/log/syslog
 ```
 
