@@ -17,11 +17,15 @@ if ! command -v lb &> /dev/null; then
   apt-get update && apt-get install -y live-build
 fi
 
+# Set project root to the directory containing this script's parent (project root)
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
 # Create build directory
 BUILD_DIR=live-build-a1nas
-rm -rf $BUILD_DIR
-mkdir $BUILD_DIR
-cd $BUILD_DIR
+cd "$PROJECT_ROOT"
+rm -rf "$BUILD_DIR"
+mkdir "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 # Bootstrap config
 lb config \
@@ -32,6 +36,7 @@ lb config \
   --bootappend-live "boot=live components username=a1nas nosplash"
 
 # Add custom packages
+mkdir -p config/package-lists
 cat <<EOF > config/package-lists/a1nas.list.chroot
 zfsutils-linux
 nginx
@@ -47,9 +52,6 @@ EOF
 
 # Add custom hooks for A1Nas
 mkdir -p config/includes.chroot/opt/a1nas
-PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-echo "PROJECT_ROOT is: $PROJECT_ROOT"
-ls "$PROJECT_ROOT"
 cp -r "$PROJECT_ROOT/backend" "$PROJECT_ROOT/frontend" "$PROJECT_ROOT/cli" config/includes.chroot/opt/a1nas/
 cp "$PROJECT_ROOT/build/installer.sh" config/includes.chroot/opt/a1nas/
 
