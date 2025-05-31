@@ -47,8 +47,11 @@ EOF
 
 # Add custom hooks for A1Nas
 mkdir -p config/includes.chroot/opt/a1nas
-cp -r ../../backend ../../frontend ../../cli config/includes.chroot/opt/a1nas/
-cp ../../build/installer.sh config/includes.chroot/opt/a1nas/
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+echo "PROJECT_ROOT is: $PROJECT_ROOT"
+ls "$PROJECT_ROOT"
+cp -r "$PROJECT_ROOT/backend" "$PROJECT_ROOT/frontend" "$PROJECT_ROOT/cli" config/includes.chroot/opt/a1nas/
+cp "$PROJECT_ROOT/build/installer.sh" config/includes.chroot/opt/a1nas/
 
 # Add a post-install hook to enable services and set up system
 mkdir -p config/hooks

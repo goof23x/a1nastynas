@@ -1,5 +1,42 @@
 # A1Nas - Simple NAS Operating System
 
+## 🚀 Quick Start (Simple Setup)
+
+**1. Download A1Nas**
+- Go to [a1t.dev](https://a1t.dev)
+- Click the big **Download A1Nas** button to get the latest ISO file.
+
+**2. Write A1Nas to a USB Stick**
+- Open [Etcher](https://www.balena.io/etcher/) (Windows, Mac, or Linux)
+  *(Or use [Rufus](https://rufus.ie/) on Windows if you prefer)*
+- Select the A1Nas ISO you just downloaded.
+- Select your USB stick (8GB or larger).
+- Click **Flash**.
+
+**3. Boot Your Server or PC**
+- Plug the USB stick into your server or PC.
+- Turn it on and boot from USB.
+  *(You may need to press F12, F2, ESC, or DEL to select the USB drive at boot.)*
+
+**4. Follow the On-Screen Instructions**
+- The installer will appear automatically.
+- For most users, just choose **Simple Setup (Quick Start)** and let A1Nas do the rest.
+- When finished, the screen will show you the web address to access your NAS.
+
+**5. Access Your NAS**
+- On any device on your network, open a browser and go to the address shown (e.g., `https://a1nas.local` or `https://<your-ip>`).
+- Log in and start using your new NAS!
+
+---
+
+## 🛠️ Guided Setup (Advanced)
+
+- If you want to customize your network, storage, RAID, or security settings, choose **Guided Setup** in the installer.
+- Guided Setup walks you through each step and lets you fine-tune your configuration.
+- Recommended for advanced users or special requirements.
+
+---
+
 A1Nas is a simple, secure, and powerful NAS operating system built on Ubuntu Server LTS. It provides a modern, Google Drive-inspired web interface for managing your storage, with built-in support for ZFS, Docker, and the LSI 9300-16i SAS controller. The UI features custom branding and a default background image (`a1nas.png`).
 
 ## Pre-Installation Checklist
@@ -36,14 +73,6 @@ If you want to use a custom domain:
 1. Register a domain name (e.g., from Namecheap, GoDaddy)
 2. Set up DNS A record pointing to your server's IP
 3. Ensure port 80 and 443 are forwarded to your server
-
-## Quick Start for End Users
-
-1. Download the latest A1Nas ISO from the [GitHub Releases page](https://github.com/goob/a1nas/releases).
-2. Use Rufus (Windows), Etcher (Mac/Linux), or the Proxmox ISO uploader to write the ISO to a USB stick or upload to your VM environment.
-3. Boot your server or VM from the USB or ISO.
-4. On the installer, select 'Quick Start' to use all default settings, or choose 'Guided Setup' for custom configuration.
-5. Access the web interface at the displayed IP address and start using your NAS!
 
 ## For Developers: Building and Publishing the ISO
 
