@@ -200,4 +200,101 @@ func (s *StorageService) CopyItem(source, destination string) error {
 		return fmt.Errorf("failed to copy file: %v", err)
 	}
 	return nil
+}
+
+// Spin down all disks (Unraid/TrueNAS style)
+func (s *StorageService) SpinDownDisks() error {
+	devices, err := s.GetAvailableDevices()
+	if err != nil {
+		return err
+	}
+	for _, dev := range devices {
+		// Use hdparm to spin down (standby) the disk
+		cmd := exec.Command("hdparm", "-y", dev)
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("failed to spin down %s: %v", dev, err)
+		}
+	}
+	return nil
+}
+
+// Spin up all disks (wake from standby)
+func (s *StorageService) SpinUpDisks() error {
+	devices, err := s.GetAvailableDevices()
+	if err != nil {
+		return err
+	}
+	for _, dev := range devices {
+		// Try to wake up the disk by reading a small block
+		cmd := exec.Command("dd", "if="+dev, "of=/dev/null", "bs=512", "count=1")
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("failed to spin up %s: %v", dev, err)
+		}
+	}
+	return nil
+}
+
+// Get SMART, size, health, serial, and temperature info for each device
+func (s *StorageService) GetDeviceInfo() ([]map[string]interface{}, error) {
+	devices, err := s.GetAvailableDevices()
+	if err != nil {
+		return nil, err
+	}
+	var infos []map[string]interface{}
+	for _, dev := range devices {
+		info := map[string]interface{}{"device": dev}
+		// Get size
+		sizeCmd := exec.Command("lsblk", "-bno", "SIZE", dev)
+		sizeOut, err := sizeCmd.Output()
+		if err == nil {
+			info["size"] = strings.TrimSpace(string(sizeOut))
+		}
+		// Get SMART health, serial, temp
+		smartCmd := exec.Command("smartctl", "-a", dev)
+		smartOut, err := smartCmd.Output()
+		if err == nil {
+			out := string(smartOut)
+			if strings.Contains(out, "PASSED") {
+				info["health"] = "Healthy"
+			} else if strings.Contains(out, "FAILED") {
+				info["health"] = "Failed"
+			} else {
+				info["health"] = "Unknown"
+			}
+			// Serial
+			for _, line := range strings.Split(out, "\n") {
+				if strings.Contains(line, "Serial Number") {
+					info["serial"] = strings.TrimSpace(strings.SplitN(line, ":", 2)[1])
+				}
+				if strings.Contains(line, "Temperature_Celsius") {
+					fields := strings.Fields(line)
+					if len(fields) > 9 {
+						info["temp"] = fields[9]
+					}
+				}
+				if strings.Contains(line, "Current Drive Temperature") {
+					// For NVMe/other drives
+					fields := strings.Fields(line)
+					if len(fields) > 4 {
+						info["temp"] = fields[4]
+					}
+				}
+			}
+		} else {
+			info["health"] = "Unknown"
+		}
+		infos = append(infos, info)
+	}
+	return infos, nil
+}
+
+// Blink drive LED (if supported)
+func (s *StorageService) BlinkDrive(dev string) error {
+	// Try smartctl --set=sctled,identify,1 (SCT LED control)
+	cmd := exec.Command("smartctl", "-l", "sctled,identify,1", dev)
+	if err := cmd.Run(); err == nil {
+		return nil
+	}
+	// Try sg_ses or ledctl as fallback (not implemented here)
+	return fmt.Errorf("blink not supported or failed for %s", dev)
 } 

@@ -169,6 +169,7 @@ if [ "$CHOICE" = "2" ]; then
   RAID_CHOICE=1    # RAID 1 (Mirror)
   ADMIN_USER="admin"
   ADMIN_PASS="admin1234"
+  DOCKER_INSTALL=1 # Always install Docker in Quick Start
   # Proceed with default setup (skip prompts)
   # ... (insert the rest of the installer logic here, using these defaults)
 else
@@ -253,6 +254,12 @@ Let's set up basic security:
 
 This will help protect your NAS from unauthorized access." 15 60
 
+  # Docker Install Option
+  DOCKER_INSTALL=0
+  if whiptail --title "Docker" --yesno "Would you like to install Docker (recommended for app management)?" 10 60; then
+    DOCKER_INSTALL=1
+  fi
+
   # Admin Account Setup
   ADMIN_USER=$(whiptail --title "Admin Account" \
     --inputbox "Create admin username:" 10 60 3>&1 1>&2 2>&3)
@@ -266,6 +273,7 @@ Installation Summary:
 Network: $([ $NETWORK_CHOICE -eq 1 ] && echo "DHCP" || echo "Static IP: $IP_ADDRESS")
 RAID Level: ${RAID_OPTIONS[$((RAID_CHOICE-1))]}
 Admin User: $ADMIN_USER
+Docker: $([ $DOCKER_INSTALL -eq 1 ] && echo "Will be installed" || echo "Not selected")
 
 Press OK to begin installation.
 This may take several minutes." 15 60
@@ -306,4 +314,10 @@ Please reboot your system to complete the installation." 15 60
   echo -e "${WHITE}Please reboot your system.${NC}"
   echo -e "${BRIGHT_CYAN}Thank you for choosing A1Nas!${NC}"
   echo -e "${DARK_GRAY}Created by A1Tech LLC${NC}"
+
+  # After main install steps, install Docker if selected
+  if [ $DOCKER_INSTALL -eq 1 ]; then
+    echo -e "${DARK_GRAY}Installing Docker...${NC}"
+    curl -fsSL https://get.docker.com | sh
+  fi
 fi

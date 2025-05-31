@@ -31,7 +31,12 @@ const routes = [
     name: 'System',
     component: () => import('../views/System.vue'),
     meta: { requiresAuth: true }
-  }
+  },
+  { path: '/drives', name: 'Drives', component: { template: '<div>Drives Management (Coming Soon)</div>' } },
+  { path: '/explorer', name: 'Explorer', component: { template: '<div>File Explorer (Coming Soon)</div>' } },
+  { path: '/users', name: 'Users', component: { template: '<div>User & Group Management (Coming Soon)</div>' } },
+  { path: '/tools', name: 'Tools', component: { template: '<div>System Tools & Diagnostics (Coming Soon)</div>' } },
+  { path: '/settings', name: 'Settings', component: { template: '<div>Settings (Coming Soon)</div>' } },
 ]
 
 const router = createRouter({

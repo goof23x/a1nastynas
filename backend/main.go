@@ -250,6 +250,51 @@ func main() {
 				}
 				c.Status(http.StatusOK)
 			})
+
+			// Spin down disks endpoint
+			storage.POST("/spin-down", func(c *gin.Context) {
+				err := storageService.SpinDownDisks()
+				if err != nil {
+					c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+					return
+				}
+				c.JSON(http.StatusOK, gin.H{"message": "All disks spun down"})
+			})
+
+			// Spin up disks endpoint
+			storage.POST("/spin-up", func(c *gin.Context) {
+				err := storageService.SpinUpDisks()
+				if err != nil {
+					c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+					return
+				}
+				c.JSON(http.StatusOK, gin.H{"message": "All disks spun up"})
+			})
+
+			// Device info endpoint
+			storage.GET("/devices/info", func(c *gin.Context) {
+				infos, err := storageService.GetDeviceInfo()
+				if err != nil {
+					c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+					return
+				}
+				c.JSON(http.StatusOK, infos)
+			})
+
+			// Blink drive LED endpoint
+			storage.POST("/devices/blink", func(c *gin.Context) {
+				var req struct { Device string `json:"device" binding:"required"` }
+				if err := c.ShouldBindJSON(&req); err != nil {
+					c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+					return
+				}
+				err := storageService.BlinkDrive(req.Device)
+				if err != nil {
+					c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+					return
+				}
+				c.JSON(http.StatusOK, gin.H{"message": "Drive blinked"})
+			})
 		}
 
 		// Docker routes
