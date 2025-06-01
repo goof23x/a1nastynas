@@ -27,11 +27,21 @@ rm -rf "$BUILD_DIR"
 mkdir "$BUILD_DIR"
 cd "$BUILD_DIR"
 
+# Ensure config/hooks directory exists for live-build hooks
+mkdir -p config/hooks
+
+# Add a hook to set PATH in chroot (industry standard fix for start-stop-daemon issue)
+cat <<'EOF' > config/hooks/005-fix-path.chroot
+#!/bin/sh
+export PATH="$PATH:/sbin:/usr/sbin"
+EOF
+chmod +x config/hooks/005-fix-path.chroot
+
 # Bootstrap config
 lb config \
   --distribution jammy \
   --archive-areas "main restricted universe multiverse" \
-  --debian-installer live \
+  #--debian-installer live \
   --binary-images iso-hybrid \
   --bootappend-live "boot=live components username=a1nas nosplash"
 
