@@ -41,9 +41,9 @@ chmod +x config/hooks/005-fix-path.chroot
 lb config \
   --distribution jammy \
   --archive-areas "main restricted universe multiverse" \
-  #--debian-installer live \
   --binary-images iso-hybrid \
-  --bootappend-live "boot=live components username=a1nas nosplash"
+  --bootappend-live "boot=live components username=a1nas nosplash" \
+  --syslinux-theme none
 
 # Add custom packages
 mkdir -p config/package-lists
@@ -58,6 +58,9 @@ fail2ban
 ufw
 git
 cifs-utils
+syslinux
+isolinux
+syslinux-common
 EOF
 
 # Add custom hooks for A1Nas
