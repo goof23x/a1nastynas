@@ -43,7 +43,7 @@ lb config \
   --archive-areas "main restricted universe multiverse" \
   --binary-images iso-hybrid \
   --bootappend-live "boot=live components username=a1nas nosplash" \
-  --syslinux-theme none
+  --bootloader grub-efi
 
 # Add custom packages
 mkdir -p config/package-lists
@@ -58,9 +58,6 @@ fail2ban
 ufw
 git
 cifs-utils
-syslinux
-isolinux
-syslinux-common
 EOF
 
 # Add custom hooks for A1Nas
