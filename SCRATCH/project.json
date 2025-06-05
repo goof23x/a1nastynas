@@ -1,0 +1,47 @@
+{
+  "name": "A1Nas",
+  "description": "A user-friendly, feature-rich NAS operating system with ZFS, Docker, and modern web UI, focused on simplicity, security, and modern UX. Designed for easy use, robust storage, and LSI 9300-16i SAS controller support.",
+  "tech_stack": {
+    "frontend": "Vue 3, Vite, Tailwind CSS",
+    "backend": "Go (Gin)",
+    "installer": "Whiptail-based shell script",
+    "build_system": "Shell scripts for build, packaging, ISO creation"
+  },
+  "features": [
+    "Modern dashboard with system stats",
+    "ZFS pool management (create, destroy, list)",
+    "File explorer (upload, download, create/delete files and directories)",
+    "Docker management (containers, images, volumes)",
+    "System monitoring (CPU, RAM, disk, network)",
+    "JWT authentication and session management",
+    "Guided installer with ASCII art, color, and help system",
+    "Security hardening: disables root login, UFW, Fail2ban, SSL, strong passwords",
+    "First-boot wizard for initial setup"
+  ],
+  "branding": {
+    "ascii_art": true,
+    "modern_ui": true,
+    "company": "A1Tech LLC"
+  },
+  "directory_structure": [
+    "backend/ (Go backend, services, middleware, logs)",
+    "frontend/ (Vue 3 frontend, components, views, router, services)",
+    "installer/ (installer scripts, preseed)",
+    "build/ (build and ISO creation scripts)",
+    "README.md, LICENSE, a1nas.png"
+  ],
+  "security": {
+    "root_login_disabled": true,
+    "ufw_enabled": true,
+    "fail2ban_enabled": true,
+    "ssl_certificates": true,
+    "strong_passwords": true
+  },
+  "testing_and_distribution": {
+    "vm_testing": "VirtualBox/VMware supported",
+    "iso_build": "Ubuntu 22.04 LTS base",
+    "bootable_usb": true,
+    "readme_instructions": true
+  },
+  "status": "~90% complete, ready for further polish or deployment"
+} 

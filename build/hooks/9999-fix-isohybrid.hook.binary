@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+echo "Fixing isohybrid for final ISO..."
+
+# Ensure isohybrid is available in the build environment
+which isohybrid >/dev/null 2>&1 || {
+  echo "Installing syslinux-utils for isohybrid in build environment..."
+  apt-get update
+  apt-get install -y --no-install-recommends syslinux-utils
+}
+
+# Check if we have a hybrid ISO to process
+if [ -f binary.hybrid.iso ]; then
+  echo "Processing hybrid ISO with isohybrid..."
+  
+  # Apply isohybrid to make the ISO bootable from USB
+  # --entry 4: Use partition table entry 4
+  # --type 0x1c: Set partition type to Windows 95 FAT32 (LBA)
+  /usr/bin/isohybrid --entry 4 --type 0x1c binary.hybrid.iso || {
+    echo "Warning: isohybrid failed, but continuing..."
+    exit 0
+  }
+  
+  echo "Successfully applied isohybrid to ISO"
+else
+  echo "No binary.hybrid.iso found, skipping isohybrid"
+fi
+
+echo "isohybrid processing complete!"
+exit 0 
