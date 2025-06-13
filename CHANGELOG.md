@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.0] - 2024-03-19
+
+### ✨ Added
+- **Enhanced Web Interface**:
+  - Modern Google Drive-inspired UI
+  - Custom branding and background
+  - Improved file management
+  - Real-time system monitoring
+- **Advanced Monitoring Dashboard**:
+  - System resource usage
+  - Storage pool status
+  - Network traffic monitoring
+  - Service health checks
+- **Additional Storage Features**:
+  - ZFS pool management
+  - RAID configuration
+  - Samba share management
+  - NFS export support
+- **Improved Security**:
+  - Automatic SSL certificates
+  - Firewall configuration
+  - Fail2ban protection
+  - Secure SSH settings
+  - No root login
+
+### 🔧 Fixed
+- **Build Process**:
+  - Optimized build scripts
+  - Enhanced error handling
+  - Improved package management
+- **Documentation**:
+  - Updated installation guides
+  - Added troubleshooting section
+  - Improved API documentation
+- **Testing Framework**:
+  - Automated test suite
+  - ISO verification tools
+  - Hardware compatibility checks
+
 ## [0.0.9] - 06-12-2025
 
 ### 🔧 Fixed - Critical Package Installation Issue
@@ -58,13 +97,13 @@ sudo ./build/build_live_iso_enhanced.sh
 
 ## [Planned] - Future Versions
 
-### [0.1.0] - Next Major Release
-- [ ] Web interface improvements
-- [ ] Enhanced monitoring dashboard
-- [ ] Additional storage backends
-- [ ] Improved security features
+### [0.2.0] - Next Major Release
+- [ ] Plugin system
+- [ ] Container management UI
+- [ ] Backup and restore features
+- [ ] Advanced networking options
 
-### [0.0.x] - Bug fixes and minor improvements
-- [ ] Build process optimizations
-- [ ] Documentation improvements
-- [ ] Testing framework enhancements 
+### [0.1.x] - Bug fixes and minor improvements
+- [ ] Performance optimizations
+- [ ] Additional hardware support
+- [ ] UI/UX refinements 

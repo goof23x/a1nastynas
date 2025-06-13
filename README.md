@@ -3,8 +3,9 @@
 ## 🚀 Quick Start (Simple Setup)
 
 **1. Download A1Nas**
-- Go to [a1t.dev](https://a1t.dev)
-- Click the big **Download A1Nas** button to get the latest ISO file.
+- Go to [a1t.dev](https://a1t-dev.pages.dev)
+- Click the big **Download A1Nas** button to get the latest ISO file (v0.1.0).
+- Or download directly from [GitHub Releases](https://github.com/goob/a1nas/releases)
 
 **2. Write A1Nas to a USB Stick**
 - Open [Etcher](https://www.balena.io/etcher/) (Windows, Mac, or Linux)
@@ -52,15 +53,15 @@ A1Nas is a simple, secure, and powerful NAS operating system built on Ubuntu Ser
 ### Required Software
 1. **For Windows Users**:
    - Download [Rufus](https://rufus.ie/)
-   - Download the latest A1Nas ISO from [releases](https://github.com/goob/a1nas/releases)
+   - Download A1Nas v0.1.0 ISO from [releases](https://github.com/goob/a1nas/releases)
 
 2. **For Mac Users**:
    - Download [Etcher](https://www.balena.io/etcher/)
-   - Download the latest A1Nas ISO from [releases](https://github.com/goob/a1nas/releases)
+   - Download A1Nas v0.1.0 ISO from [releases](https://github.com/goob/a1nas/releases)
 
 3. **For Linux Users**:
    - Install Etcher: `sudo snap install etcher`
-   - Download the latest A1Nas ISO from [releases](https://github.com/goob/a1nas/releases)
+   - Download A1Nas v0.1.0 ISO from [releases](https://github.com/goob/a1nas/releases)
 
 ### Network Preparation
 1. Ensure your network has:
@@ -78,13 +79,23 @@ If you want to use a custom domain:
 
 1. Build the ISO:
    ```bash
-   sudo bash build/build_live_iso.sh
+   sudo bash build/build_live_iso_enhanced.sh
    cd live-build-a1nas
    sudo lb build
    ```
    The ISO will be created as `live-image-amd64.hybrid.iso`.
 
-2. Test the ISO in a VM or on real hardware.
+2. Test the ISO in a VM or on real hardware:
+   ```bash
+   # Run verification script
+   sudo /usr/local/bin/a1nas-verify.sh
+   
+   # Check critical services
+   systemctl status docker nginx ssh
+   
+   # Verify packages
+   dpkg -l | grep -E 'docker|nginx|samba|zfs'
+   ```
 
 3. Go to your GitHub repository → Releases → Draft a new release.
 4. Upload the ISO as a release asset and publish the release.
