@@ -57,7 +57,7 @@ lb config \
   --archive-areas "main restricted universe multiverse" \
   --binary-images iso-hybrid \
   --bootappend-live "boot=live components username=a1nas nosplash" \
-  --bootloaders "grub-efi,syslinux" \
+  --bootloader "grub-efi" \
   --memtest none \
   --firmware-chroot false
 
