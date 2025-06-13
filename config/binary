@@ -1,0 +1,48 @@
+# config/binary - options for live-build(7), binary stage
+
+# $LB_BINARY_FILESYSTEM: set image filesystem
+# (Default: fat32)
+LB_BINARY_FILESYSTEM="fat32"
+
+# $LB_BINARY_IMAGES: set image type
+# (Default: iso-hybrid)
+LB_BINARY_IMAGES="iso-hybrid"
+
+# $LB_APT_INDICES: set apt/aptitude generic indices
+# (Default: true)
+LB_APT_INDICES="true"
+
+# $LB_BOOTAPPEND_LIVE: set boot parameters
+# (Default: empty)
+LB_BOOTAPPEND_LIVE="boot=live components quiet splash"
+
+# $LB_BOOTAPPEND_INSTALL: set boot parameters
+# (Default: empty)
+LB_BOOTAPPEND_INSTALL=""
+
+# $LB_BOOTAPPEND_FAILSAFE: set boot parameters
+# (Default: empty)
+LB_BOOTAPPEND_FAILSAFE="boot=live components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal"
+
+# $LB_BOOTLOADERS: set bootloaders
+# (Default: syslinux)
+LB_BOOTLOADERS="syslinux"
+
+# $LB_CHECKSUMS: set checksums
+# (Default: md5)
+LB_CHECKSUMS="md5"
+
+# $LB_COMPRESSION: set compression
+# (Default: none)
+LB_COMPRESSION="none"
+
+# $LB_ZSYNC: set zsync
+# (Default: true)
+LB_ZSYNC="true"
+
+# $LB_BUILD_WITH_CHROOT: control if we build binary images chrooted
+# (Default: true)
+LB_BUILD_WITH_CHROOT="true"
+
+# Disable memtest to avoid installation issues
+LB_MEMTEST="none" 

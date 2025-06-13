@@ -1,0 +1,28 @@
+# A1NAS Live Build Artifacts
+*.iso
+*.log
+cache/
+chroot/
+binary/
+.build/
+live-build-a1nas/
+
+# Development artifacts
+test-a1nas-completion.sh
+*.tmp
+*.temp
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS artifacts  
+.DS_Store
+Thumbs.db
+
+# Local testing (use for local development tracking)
+TODO-COMPLETION.md
+local-test-* 

@@ -1,0 +1,14 @@
+#!/bin/bash
+# Live-build hook to configure A1NAS system
+
+set -e
+
+echo "🔧 Running A1NAS setup hook..."
+
+# Make setup script executable
+chmod +x /usr/local/bin/a1nas-setup.sh
+
+# Run the setup script
+/usr/local/bin/a1nas-setup.sh
+
+echo "✅ A1NAS setup hook completed!" 

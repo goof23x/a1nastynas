@@ -89,7 +89,13 @@ echo -e "${CYAN}Running enhanced configuration...${NC}"
 
 # Add original A1Nas packages
 echo -e "${CYAN}Adding A1Nas package list...${NC}"
-cat > config/package-lists/a1nas.list.chroot << EOF
+# Copy the comprehensive package list instead of creating a basic one
+if [ -f "$PROJECT_ROOT/config/package-lists/a1nas.list.chroot" ]; then
+  echo -e "${CYAN}Using comprehensive A1NAS package list...${NC}"
+  cp "$PROJECT_ROOT/config/package-lists/a1nas.list.chroot" config/package-lists/
+else
+  echo -e "${YELLOW}Warning: Comprehensive package list not found, creating basic list...${NC}"
+  cat > config/package-lists/a1nas.list.chroot << EOF
 zfsutils-linux
 nginx
 curl
@@ -100,48 +106,41 @@ fail2ban
 ufw
 git
 cifs-utils
+linux-image-generic
 EOF
+fi
 
-# Create enhanced hooks directory structure
-echo -e "${CYAN}Setting up enhanced hooks...${NC}"
-mkdir -p config/hooks/normal
+# Copy all comprehensive configuration files
+echo -e "${CYAN}Adding comprehensive A1NAS configuration...${NC}"
+if [ -d "$PROJECT_ROOT/config/includes.chroot" ]; then
+  echo -e "${CYAN}Copying A1NAS system configurations...${NC}"
+  cp -r "$PROJECT_ROOT/config/includes.chroot"/* config/includes.chroot/
+fi
 
-# Copy our pre-built hooks
-cp "$SCRIPT_DIR/hooks/9000-cleanup-themes.hook.chroot" config/hooks/normal/
-cp "$SCRIPT_DIR/hooks/9999-fix-isohybrid.hook.binary" config/hooks/normal/
-chmod +x config/hooks/normal/*.hook.*
+# Copy comprehensive hooks
+if [ -d "$PROJECT_ROOT/config/hooks" ]; then
+  echo -e "${CYAN}Copying A1NAS setup hooks...${NC}"
+  cp -r "$PROJECT_ROOT/config/hooks"/* config/hooks/
+fi
 
-# Add the original PATH fix hook
-cat > config/hooks/normal/0005-fix-path.hook.chroot << 'EOF'
+# Ensure hooks directory exists and set permissions
+echo -e "${CYAN}Setting up hooks permissions...${NC}"
+if [ -d "config/hooks" ]; then
+  find config/hooks -name "*.hook.*" -exec chmod +x {} \;
+fi
+
+# Add essential build hooks if not present
+if [ ! -f "config/hooks/normal/0005-fix-path.hook.chroot" ]; then
+  mkdir -p config/hooks/normal
+  cat > config/hooks/normal/0005-fix-path.hook.chroot << 'EOF'
 #!/bin/sh
 set -e
 export PATH="$PATH:/sbin:/usr/sbin"
 echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/no-recommends
 echo 'APT::Install-Suggests "false";' > /etc/apt/apt.conf.d/no-suggests
 EOF
-chmod +x config/hooks/normal/0005-fix-path.hook.chroot
-
-# Add A1Nas setup hook
-cat > config/hooks/normal/0010-a1nas-setup.hook.chroot << 'EOF'
-#!/bin/bash
-set -e
-echo "Setting up A1Nas services..."
-# Enable and start nginx
-systemctl enable nginx
-# Enable SSH
-systemctl enable ssh
-# Enable fail2ban
-systemctl enable fail2ban
-# Enable UFW and allow needed ports
-ufw allow 22
-ufw allow 80
-ufw allow 443
-ufw --force enable
-# Make installer executable
-chmod +x /opt/a1nas/installer.sh
-echo "A1Nas setup complete!"
-EOF
-chmod +x config/hooks/normal/0010-a1nas-setup.hook.chroot
+  chmod +x config/hooks/normal/0005-fix-path.hook.chroot
+fi
 
 # Add custom includes for A1Nas
 echo -e "${CYAN}Adding A1Nas files...${NC}"

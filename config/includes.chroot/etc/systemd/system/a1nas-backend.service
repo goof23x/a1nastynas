@@ -1,0 +1,25 @@
+[Unit]
+Description=A1NAS Backend Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=a1nas
+Group=a1nas
+WorkingDirectory=/opt/a1nas/backend
+ExecStart=/opt/a1nas/backend/a1nasd
+Restart=always
+RestartSec=5
+Environment=A1NAS_CONFIG=/etc/a1nas/config.yaml
+Environment=A1NAS_DATA=/var/lib/a1nas
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/a1nas /var/log/a1nas
+
+[Install]
+WantedBy=multi-user.target 

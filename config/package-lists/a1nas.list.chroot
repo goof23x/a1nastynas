@@ -1,0 +1,49 @@
+# Core NAS Storage & File Systems
+zfsutils-linux
+samba
+samba-common-bin
+nfs-kernel-server
+nfs-common
+mdadm
+lvm2
+parted
+gdisk
+
+# Container & Virtualization
+docker.io
+docker-compose
+
+# Network Services
+nginx
+openssh-server
+fail2ban
+ufw
+
+# System Management & Monitoring
+htop
+iotop
+nethogs
+smartmontools
+hdparm
+iperf3
+nmap
+tcpdump
+psmisc
+procps
+
+# Security & Hardening
+apparmor-utils
+
+# Basic utilities
+curl
+sudo
+whiptail
+git
+cifs-utils
+linux-image-generic
+
+# Network tools
+net-tools
+dnsutils
+wget
+rsync 

@@ -1,0 +1,40 @@
+# A1NAS Configuration File
+server:
+  host: "0.0.0.0"
+  port: 8080
+  debug: false
+
+database:
+  type: "sqlite"
+  path: "/var/lib/a1nas/a1nas.db"
+
+storage:
+  data_dir: "/var/lib/a1nas/data"
+  shares_dir: "/var/lib/a1nas/shares"
+  temp_dir: "/tmp/a1nas"
+
+logging:
+  level: "info"
+  file: "/var/log/a1nas/a1nas.log"
+  max_size: 100  # MB
+  max_backups: 5
+
+security:
+  jwt_secret: "change-this-secret-key"
+  session_timeout: 3600  # seconds
+  max_login_attempts: 5
+
+services:
+  samba:
+    enabled: true
+    config_path: "/etc/samba/smb.conf"
+  nfs:
+    enabled: true
+    exports_path: "/etc/exports"
+  docker:
+    enabled: true
+    socket: "/var/run/docker.sock"
+
+network:
+  interface: "auto"
+  dhcp: true 
