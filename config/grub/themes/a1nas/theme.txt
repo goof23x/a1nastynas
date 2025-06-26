@@ -1,0 +1,114 @@
+# A1NAS GRUB Theme Configuration
+# Professional design with cyan/blue color scheme
+
+# Desktop image
+desktop-image: "background.png"
+desktop-color: "#0a0a0a"
+
+# Title bar
+title-text: ""
+title-font: "DejaVu Sans Bold 20"
+title-color: "#00ffff"
+
+# Boot menu
++ boot_menu {
+    left = 15%
+    top = 20%
+    width = 70%
+    height = 60%
+    
+    item_font = "DejaVu Sans Bold 16"
+    item_color = "#00ffff"
+    selected_item_font = "DejaVu Sans Bold 16"
+    selected_item_color = "#ffffff"
+    selected_item_pixmap_style = "selected_*.png"
+    
+    item_height = 32
+    item_padding = 8
+    item_spacing = 4
+    
+    menu_pixmap_style = "menu_*.png"
+    scrollbar = true
+    scrollbar_width = 20
+    scrollbar_thumb = "scrollbar_thumb.png"
+}
+
+# Progress bar (for loading)
++ progress_bar {
+    left = 15%
+    top = 85%
+    width = 70%
+    height = 24
+    
+    id = "__timeout__"
+    text = "@TIMEOUT_NOTIFICATION_LONG@"
+    font = "DejaVu Sans 14"
+    text_color = "#00ffff"
+    
+    bar_style = "progress_bar_*.png"
+    highlight_style = "progress_highlight_*.png"
+}
+
+# Labels and status text
++ label {
+    left = 15%
+    top = 10%
+    width = 70%
+    height = 40
+    
+    id = "__title__"
+    text = "A1NAS Network OS - Professional Edition"
+    font = "DejaVu Sans Bold 24"
+    color = "#ffffff"
+    align = "center"
+}
+
++ label {
+    left = 15%
+    top = 92%
+    width = 70%
+    height = 20
+    
+    text = "🚀 Use ↑↓ arrows to navigate • Enter to select • ESC for command line"
+    font = "DejaVu Sans 12"
+    color = "#00aaff"
+    align = "center"
+}
+
+# Branding label
++ label {
+    right = 98%
+    bottom = 2%
+    width = 200
+    height = 20
+    
+    text = "A1NAS v1.0"
+    font = "DejaVu Sans 10"
+    color = "#666666"
+    align = "right"
+}
+
+# Status indicators
++ label {
+    left = 2%
+    top = 2%
+    width = 300
+    height = 20
+    
+    text = "⚡ UEFI/BIOS Compatible"
+    font = "DejaVu Sans 10"
+    color = "#00ff00"
+    align = "left"
+}
+
++ label {
+    left = 2%
+    top = 6%
+    width = 300
+    height = 20
+    
+    text = "💾 Live Boot Ready"
+    font = "DejaVu Sans 10"
+    color = "#00ff00"
+    align = "left"
+}
