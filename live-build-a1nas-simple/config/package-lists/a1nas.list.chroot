@@ -1,0 +1,24 @@
+# Essential packages
+sudo
+curl
+wget
+openssh-server
+net-tools
+dnsutils
+
+# System tools
+htop
+tree
+vim
+nano
+
+# Network storage
+samba
+nfs-kernel-server
+
+# Basic desktop (minimal)
+ubuntu-minimal
+ubuntu-standard
+
+# Branding tools
+figlet

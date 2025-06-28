@@ -1,0 +1,55 @@
+#!/bin/bash
+set -e
+
+echo "Applying A1NAS Professional Branding..."
+
+# Create a1nas user
+if ! id a1nas >/dev/null 2>&1; then
+    useradd -m -s /bin/bash -G sudo a1nas
+    passwd -d a1nas
+fi
+
+# Configure sudo
+echo 'a1nas ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/a1nas
+chmod 440 /etc/sudoers.d/a1nas
+
+# Create branded bash profile
+cat > /home/a1nas/.bashrc << 'BASHRC'
+# A1NAS Branded Profile
+export PS1="\[\033[0;36m\][\[\033[0;32m\]A1NAS\[\033[0;36m\]]\[\033[0;35m\]\u\[\033[0;33m\]@\[\033[0;32m\]\h\[\033[0;36m\]:\[\033[0;34m\]\w\[\033[0;36m\]$ \[\033[0m\]"
+
+# A1NAS Banner
+show_a1nas_banner() {
+    echo -e "\033[0;36m"
+    echo "╔══════════════════════════════════════════════════════════════════╗"
+    echo "║  ▄▀█ ▄█ █▄ █ ▄▀█ █▀   █▄ █ █▀▀ ▀█▀ █ █ █ █▀█ █▀█ █▄▀   █▀█ █▀  ║"
+    echo "║  █▄█ ▀█ █▀▄█ █▄█ ▄█   █▀▄█ ██▄  █  ▀▄▀▄▀ █▄█ █▀▄ █ █   █▄█ ▄█  ║"
+    echo "║                                                                  ║"
+    echo "║                 🚀 Network Attached Storage OS 🚀                ║"
+    echo "║                      Ready for Innovation                        ║"
+    echo "╚══════════════════════════════════════════════════════════════════╝"
+    echo -e "\033[0m"
+    echo -e "\033[1;33m💡 Welcome to A1NAS - The Ultimate Storage Solution\033[0m"
+}
+
+show_a1nas_banner
+
+# Useful aliases
+alias ll='ls -alF'
+alias a1nas-status='echo -e "\033[1;32mA1NAS Status: \033[1;33mRunning\033[0m"; df -h; free -h'
+BASHRC
+
+chown a1nas:a1nas /home/a1nas/.bashrc
+
+# Configure autologin
+mkdir -p /etc/systemd/system/getty@tty1.service.d
+cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << 'AUTOLOGIN'
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin a1nas --noclear %I $TERM
+AUTOLOGIN
+
+# Create version file
+echo "${BUILD_VERSION}-$(date +%Y%m%d)" > /etc/a1nas-version
+
+echo "A1NAS Professional Branding Applied!"

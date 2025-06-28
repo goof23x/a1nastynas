@@ -1,0 +1,40 @@
+# A1NAS Core Packages
+zfsutils-linux
+nginx
+curl
+sudo
+whiptail
+openssh-server
+fail2ban
+ufw
+git
+cifs-utils
+linux-image-generic
+
+# Docker and Container Support
+docker.io
+docker-compose
+
+# Network and Storage Tools
+nfs-kernel-server
+samba
+smartmontools
+hdparm
+lvm2
+mdadm
+
+# System Tools
+htop
+iotop
+tree
+vim
+nano
+wget
+
+# Branding Tools
+figlet
+toilet
+plymouth
+plymouth-themes
+fonts-terminus
+console-setup
